@@ -57,8 +57,8 @@ class Home extends Component {
     return (
       <div className="signup-form margin-top">
         {/* <form onSubmit={this.handleSubmit}> */}
-        <div className="text-danger">
-          <ul>
+        <div>
+          <ul className="text-danger">
             {this.state.errors.map((x) => (
               <li key={x}>{x}</li>
             ))}

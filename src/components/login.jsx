@@ -122,7 +122,7 @@ class Login extends Component {
             <Form.Control type="password" className="input-label" name="password" id="password" onChange={this.handleChange} />
           </Form.Group>
           <div className="center">
-          <Button onClick={this.handleSubmit}>Login</Button>
+          <Button className="margin-top" onClick={this.handleSubmit}>Login</Button>
           </div>
         </Form>
         {this.state.showModal ?  <GoalSet userGoals={this.state.userGoals} closeModal={this.closeModal} checkForUserGoals={this.checkForUserGoals} history={this.props.history}/> : null}

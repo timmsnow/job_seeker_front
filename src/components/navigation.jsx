@@ -13,12 +13,15 @@ class Navigation extends Component {
     let auth;
     let dashboard;
     let contacts;
+    let home;
     if (localStorage.getItem("jwt") == null) {
       auth = <Nav.Link href="/login">Login</Nav.Link>;
+      home = <Nav.Link href="/">Home</Nav.Link>;
     } else {
       auth = <Nav.Link href="/logout">Logout</Nav.Link>;
       dashboard = <Nav.Link href="/dashboard">Dashboard</Nav.Link>;
       contacts = <Nav.Link href="/contacts">Contacts</Nav.Link>;
+      home = ""
     }
 
     return (
@@ -26,8 +29,8 @@ class Navigation extends Component {
         <Navbar bg="dark" variant="dark">
           <Container>
             <Navbar.Brand href="#">Job Seeker</Navbar.Brand>
-            <Nav className="me-auto">
-              <Nav.Link href="/">Home</Nav.Link>
+            <Nav className="me-auto justify-content-end">
+              {home}
               <Nav.Link href="/about">About</Nav.Link>
               {dashboard}
               {contacts}
