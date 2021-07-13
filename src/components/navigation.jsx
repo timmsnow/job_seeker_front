@@ -28,7 +28,7 @@ class Navigation extends Component {
       <div>
         <Navbar bg="dark" variant="dark">
           <Container>
-            <Navbar.Brand href="#">Job Seeker</Navbar.Brand>
+            <Navbar.Brand>Job Seeker</Navbar.Brand>
             <Nav className="me-auto justify-content-end">
               {home}
               <Nav.Link href="/about">About</Nav.Link>

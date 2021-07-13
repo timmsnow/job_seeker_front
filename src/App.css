@@ -257,3 +257,7 @@ h1 {
 .main {
   min-height: 92vh;
 }
+
+.justify-content-end {
+  justify-content: end;
+}
