@@ -25,14 +25,14 @@ class Modal extends Component {
 
 
   getUserGoals = () => {
-    axios.get("https://job-seeker5.herokuapp.com/api/users/" + localStorage.getItem("user_id")).then((response) => {
+    axios.get("https://job-seeker-2.herokuapp.com/api/users/" + localStorage.getItem("user_id")).then((response) => {
       this.setState({ userGoals: response.data.user_goals });
       this.getUserMetrics();
     });
   };
 
   getUserMetrics = () => {
-    axios.get("https://job-seeker5.herokuapp.com/api/metric_tables/day/" + localStorage.getItem("user_id")).then((response) => {       this.setState({ metrics: response.data[0] });
+    axios.get("https://job-seeker-2.herokuapp.com/api/metric_tables/day/" + localStorage.getItem("user_id")).then((response) => {       this.setState({ metrics: response.data[0] });
     // console.log(response.data[0]);
   })
   }

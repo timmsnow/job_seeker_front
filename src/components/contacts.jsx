@@ -46,7 +46,7 @@ class Contacts extends Component {
   }
 
   indexContacts = () => {
-    axios.get("https://job-seeker5.herokuapp.com/api/users/" + localStorage.getItem("user_id")).then((res) => {
+    axios.get("https://job-seeker-2.herokuapp.com/api/users/" + localStorage.getItem("user_id")).then((res) => {
       this.setState({ contacts: res.data.contacts });
       this.setState({ filtered: res.data.contacts });
       this.setState({ userInfo: res.data });
@@ -80,7 +80,7 @@ class Contacts extends Component {
 
   updateContactInfo = (contact) => {
     // let updatedContact = null;
-    axios.patch("https://job-seeker5.herokuapp.com/api/contacts/" + contact.id, contact).then((res) => {
+    axios.patch("https://job-seeker-2.herokuapp.com/api/contacts/" + contact.id, contact).then((res) => {
       console.log(res.data);
       // this.state.contacts.splice(this.state.contacts.indexOf(contact.id));
       const contactIndex = this.state.contacts.findIndex((o) => o.id === res.data.id);
@@ -110,7 +110,7 @@ class Contacts extends Component {
     // console.log(params)
     // console.log("starting post request for contact");
     // console.log(contact);
-    axios.post("https://job-seeker5.herokuapp.com/api/contacts/", params).then((res) =>{
+    axios.post("https://job-seeker-2.herokuapp.com/api/contacts/", params).then((res) =>{
       console.log(res.data)
       this.closeAddContactModal()
       this.addContact(res.data)

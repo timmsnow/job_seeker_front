@@ -80,7 +80,7 @@ class Dashboard extends Component {
   }
 
   getUserJobsAndGoals = () => {
-    axios.get("https://job-seeker5.herokuapp.com//api/users/" + localStorage.getItem("user_id")).then((response) => {
+    axios.get("https://job-seeker-2.herokuapp.com/api/users/" + localStorage.getItem("user_id")).then((response) => {
       this.setState({ jobs: response.data.jobs });
       this.setState({ userGoals: response.data.user_goals });
       this.getUserMetrics();
@@ -101,7 +101,7 @@ class Dashboard extends Component {
   };
 
   getUserMetrics = () => {
-    axios.get("https://job-seeker5.herokuapp.com//api/metric_tables/day/" + localStorage.getItem("user_id")).then((response) => {
+    axios.get("https://job-seeker-2.herokuapp.com/api/metric_tables/day/" + localStorage.getItem("user_id")).then((response) => {
       if (response.data.length === 0) {
       } else {
         var oldId = response.data[0].id;
@@ -153,7 +153,7 @@ class Dashboard extends Component {
         });
         if (response.data.length === 2) {
           axios
-            .delete("https://job-seeker5.herokuapp.com//api/metric_tables/" + oldId)
+            .delete("https://job-seeker-2.herokuapp.com/api/metric_tables/" + oldId)
             .then(console.log("deleted old metric and set state of new metric successfully"));
         }
       }
@@ -196,7 +196,7 @@ class Dashboard extends Component {
 
   handleDestroyJob = (response) => {
     // var job_id = this.props.job.id
-    axios.delete("https://job-seeker5.herokuapp.com//api/jobs/" + response).then((res) => {
+    axios.delete("https://job-seeker-2.herokuapp.com/api/jobs/" + response).then((res) => {
       console.log(res.data);
       this.state.jobs.splice(this.state.jobs.indexOf(response), 1);
       // this.closeModal();
@@ -219,7 +219,7 @@ class Dashboard extends Component {
   };
 
   updateUserGoals = () => {
-    axios.get("https://job-seeker5.herokuapp.com//api/users/" + localStorage.getItem("user_id")).then((res) => {
+    axios.get("https://job-seeker-2.herokuapp.com/api/users/" + localStorage.getItem("user_id")).then((res) => {
       this.setState({ userGoals: res.data.user_goals });
     });
   };
@@ -301,7 +301,7 @@ class Dashboard extends Component {
       breaks: this.state.metrics.breaks,
     };
     axios
-      .patch("https://job-seeker5.herokuapp.com//api/metric_tables/" + localStorage.getItem("metric_row_id"), params)
+      .patch("https://job-seeker-2.herokuapp.com/api/metric_tables/" + localStorage.getItem("metric_row_id"), params)
       .then((response) => {
         console.log(response);
       });

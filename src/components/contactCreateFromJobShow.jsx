@@ -41,7 +41,7 @@ class ContactCreate extends Component {
     // console.log("starting post request for contact");
     // console.log(contact);
     axios
-      .post("https://job-seeker5.herokuapp.com/api/contacts/", params)
+      .post("https://job-seeker-2.herokuapp.com/api/contacts/", params)
       .then((res) => {
         console.log(res.data);
         this.props.closeAddContactModal();

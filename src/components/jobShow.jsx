@@ -55,7 +55,7 @@ class JobShow extends Component {
       date_updated: this.state.date_updated,
     };
     // console.log(this.props.job.id);
-    axios.patch("https://job-seeker5.herokuapp.com/api/jobs/" + this.state.id, job).then((res) => {
+    axios.patch("https://job-seeker-2.herokuapp.com/api/jobs/" + this.state.id, job).then((res) => {
       // console.log(res.data);
       // console.log(this.props.job.id)
       // this.props.setState.job(job)
@@ -66,7 +66,7 @@ class JobShow extends Component {
   };
 
   getJobContacts = () => {
-    axios.get("https://job-seeker5.herokuapp.com/api/jobs/" + this.state.id).then((res) => {
+    axios.get("https://job-seeker-2.herokuapp.com/api/jobs/" + this.state.id).then((res) => {
       if (res.data.contacts.length === 0) {
       } else {
         this.setState({ contacts: res.data.contacts });
@@ -90,7 +90,7 @@ class JobShow extends Component {
 
   updateContactInfo = (contact) => {
     // let updatedContact = null;
-    axios.patch("https://job-seeker5.herokuapp.com/api/contacts/" + contact.id, contact).then((res) => {
+    axios.patch("https://job-seeker-2.herokuapp.com/api/contacts/" + contact.id, contact).then((res) => {
       console.log(res.data);
       // this.state.contacts.splice(this.state.contacts.indexOf(contact.id));
       const contactIndex = this.state.contacts.findIndex((o) => o.id === res.data.id);

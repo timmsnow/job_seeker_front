@@ -49,7 +49,7 @@ class Login extends Component {
         portfolio_minutes: 0,
         breaks: 0,
     }
-    axios.post("https://job-seeker5.herokuapp.com/api/metric_tables", params).then((response) => {
+    axios.post("https://job-seeker-2.herokuapp.com/api/metric_tables", params).then((response) => {
       localStorage.setItem("metric_row_id", response.data.id);
     })
   };
@@ -73,7 +73,7 @@ class Login extends Component {
     };
 
     axios
-      .post("https://job-seeker5.herokuapp.com/api/sessions", userInfo)
+      .post("https://job-seeker-2.herokuapp.com/api/sessions", userInfo)
       .then((response) => {
         console.log("Logging in...");
         axios.defaults.headers.common["Authorizaton"] = "Bearer " + response.data.jwt;
@@ -94,7 +94,7 @@ class Login extends Component {
   };
 
   checkForUserGoals = () => {
-    axios.get("https://job-seeker5.herokuapp.com/api/users/" + localStorage.getItem("user_id")).then((response) => {
+    axios.get("https://job-seeker-2.herokuapp.com/api/users/" + localStorage.getItem("user_id")).then((response) => {
       console.log(response.data)
       let currentUser = response.data;
       if (currentUser.user_goals === null) {
