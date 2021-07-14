@@ -38,6 +38,7 @@ class BreakCounter extends Component {
         this.timer = setInterval(this.countDown, 1000);
         // console.log(this.state.seconds)
         // console.log(this.timer)
+        this.props.breakCounterOnly();
       } 
     }
 
@@ -46,6 +47,8 @@ class BreakCounter extends Component {
         showBreakButton: true,
       });
       clearInterval(timer);
+      this.props.showAllCounters();
+
     }
 
     countDown() {

@@ -37,6 +37,7 @@ class PortfolioCounter extends Component {
     startTimer() {
       if (this.timer >= 0 && this.state.seconds >= 0) {
         this.timer = setInterval(this.countUp, 1000);
+        this.props.portfolioCounterOnly();
       }
     }
 
@@ -61,6 +62,7 @@ class PortfolioCounter extends Component {
         showStartButton: true,
       });
       clearInterval(timer);
+      this.props.showAllCounters();
     }
 
     render() {

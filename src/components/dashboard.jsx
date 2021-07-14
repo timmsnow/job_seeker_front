@@ -45,6 +45,9 @@ class Dashboard extends Component {
         breaks: 0,
       },
       mssg: "",
+      showPortfolioCounter: true,
+      showWhiteBoardingCounter: true,
+      showBreakCounter: true,
 
       // currentJob: {},
     };
@@ -80,7 +83,7 @@ class Dashboard extends Component {
   }
 
   getUserJobsAndGoals = () => {
-    axios.get("https://job-seeker-2.herokuapp.com/api/users/" + localStorage.getItem("user_id")).then((response) => {
+    axios.get("http://localhost:3000/api/users/" + localStorage.getItem("user_id")).then((response) => {
       this.setState({ jobs: response.data.jobs });
       this.setState({ userGoals: response.data.user_goals });
       this.getUserMetrics();
@@ -101,7 +104,7 @@ class Dashboard extends Component {
   };
 
   getUserMetrics = () => {
-    axios.get("https://job-seeker-2.herokuapp.com/api/metric_tables/day/" + localStorage.getItem("user_id")).then((response) => {
+    axios.get("http://localhost:3000/api/metric_tables/day/" + localStorage.getItem("user_id")).then((response) => {
       if (response.data.length === 0) {
       } else {
         var oldId = response.data[0].id;
@@ -153,7 +156,7 @@ class Dashboard extends Component {
         });
         if (response.data.length === 2) {
           axios
-            .delete("https://job-seeker-2.herokuapp.com/api/metric_tables/" + oldId)
+            .delete("http://localhost:3000/api/metric_tables/" + oldId)
             .then(console.log("deleted old metric and set state of new metric successfully"));
         }
       }
@@ -196,7 +199,7 @@ class Dashboard extends Component {
 
   handleDestroyJob = (response) => {
     // var job_id = this.props.job.id
-    axios.delete("https://job-seeker-2.herokuapp.com/api/jobs/" + response).then((res) => {
+    axios.delete("http://localhost:3000/api/jobs/" + response).then((res) => {
       console.log(res.data);
       this.state.jobs.splice(this.state.jobs.indexOf(response), 1);
       // this.closeModal();
@@ -219,7 +222,7 @@ class Dashboard extends Component {
   };
 
   updateUserGoals = () => {
-    axios.get("https://job-seeker-2.herokuapp.com/api/users/" + localStorage.getItem("user_id")).then((res) => {
+    axios.get("http://localhost:3000/api/users/" + localStorage.getItem("user_id")).then((res) => {
       this.setState({ userGoals: res.data.user_goals });
     });
   };
@@ -301,11 +304,36 @@ class Dashboard extends Component {
       breaks: this.state.metrics.breaks,
     };
     axios
-      .patch("https://job-seeker-2.herokuapp.com/api/metric_tables/" + localStorage.getItem("metric_row_id"), params)
+      .patch("http://localhost:3000/api/metric_tables/" + localStorage.getItem("metric_row_id"), params)
       .then((response) => {
         console.log(response);
       });
   };
+
+  breakCounterOnly = () => {
+    this.setState({showPortfolioCounter: false,
+      showWhiteBoardingCounter: false
+    });
+  }
+  portfolioCounterOnly = () => {
+    this.setState({showBreakCounter: false,
+      showWhiteBoardingCounter: false
+    });
+  }
+
+  whiteBoardingCounterOnly = () => {
+    this.setState({showBreakCounter: false,
+      showPortfolioCounter: false
+    });
+  }
+  
+  showAllCounters = () => {
+    this.setState({showPortfolioCounter: true,
+      showWhiteBoardingCounter: true,
+      showBreakCounter: true
+    });
+  }
+
 
   render() {
     return (
@@ -328,25 +356,32 @@ class Dashboard extends Component {
                     metrics={this.state.metrics[index]}
                   />
 
-                {this.state.userGoalTitles[index] === "Portfolio (minutes):" && (
+                {this.state.userGoalTitles[index] === "Portfolio (minutes):" && this.state.showPortfolioCounter && ( 
                   <PortfolioCounter
                   keys={Object.keys(this.state.metrics)[3]}
                   values={Object.values(this.state.metrics)[3]}
                   increment={this.handlePortfolioIncrement}
+                  portfolioCounterOnly={this.portfolioCounterOnly}
+                  showAllCounters={this.showAllCounters}
+
                   />
                   )}
-                {this.state.userGoalTitles[index] === "White-boarding (minutes):" && (
+                {this.state.userGoalTitles[index] === "White-boarding (minutes):" && this.state.showWhiteBoardingCounter && (
                   <WhiteBoardingCounter
                   keys={Object.keys(this.state.metrics)[2]}
                   values={Object.values(this.state.metrics)[2]}
                   increment={this.handlePortfolioIncrement}
+                  showAllCounters={this.showAllCounters}
+                  whiteBoardingCounterOnly={this.whiteBoardingCounterOnly}
                   />
                   )}
-                {this.state.userGoalTitles[index] === "Breaks:" && (
+                {this.state.userGoalTitles[index] === "Breaks:" && this.state.showBreakCounter && (
                   <BreakCounter
                   keys={Object.keys(this.state.metrics)[4]}
                   values={Object.values(this.state.metrics)[4]}
                   increment={this.handleMetricIncrement}
+                  breakCounterOnly={this.breakCounterOnly}
+                  showAllCounters={this.showAllCounters}
                   />
                   )}
                   </Card>

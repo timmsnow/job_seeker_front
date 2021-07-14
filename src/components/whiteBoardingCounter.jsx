@@ -37,6 +37,8 @@ class WhiteBoardingCounter extends Component {
     startTimer() {
       if (this.timer >= 0 && this.state.seconds >= 0) {
         this.timer = setInterval(this.countUp, 1000);
+      this.props.whiteBoardingCounterOnly();
+
       }
     }
 
@@ -61,6 +63,7 @@ class WhiteBoardingCounter extends Component {
         showStartButton: true,
       });
       clearInterval(timer);
+      this.props.showAllCounters();
       
     }
 

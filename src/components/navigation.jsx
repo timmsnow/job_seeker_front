@@ -29,7 +29,7 @@ class Navigation extends Component {
         <Navbar bg="dark" variant="dark">
           <Container>
             <Navbar.Brand>Job Seeker</Navbar.Brand>
-            <Nav className="me-auto justify-content-end">
+            <Nav className="me-auto">
               {home}
               <Nav.Link href="/about">About</Nav.Link>
               {dashboard}
