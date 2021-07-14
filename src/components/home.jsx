@@ -56,6 +56,7 @@ class Home extends Component {
   render() {
     return (
       <div className="signup-form margin-top">
+        <h2 className="text-center margin gray">Hello World, that's my job!</h2>
         {/* <form onSubmit={this.handleSubmit}> */}
         <div>
           <ul className="text-danger">
@@ -103,6 +104,7 @@ class Home extends Component {
           </div>
         </Form>
         {/* <button onClick={this.getUsers}>Get Me</button> */}
+        <p className="text-center margin gray">The Ultimate Job-Seeking App for the Coding Bootcamp Graduate</p>
       </div>
     );
   }

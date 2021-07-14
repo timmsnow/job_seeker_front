@@ -257,3 +257,7 @@ h1 {
 .main {
   min-height: 92vh;
 }
+
+.gray {
+  color: #343a40;
+}
