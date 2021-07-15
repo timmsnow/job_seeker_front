@@ -106,7 +106,7 @@ class Home extends Component {
         </Form>
         {/* <button onClick={this.getUsers}>Get Me</button> */}
       </div>
-        <p className="text-center margin gray">The Ultimate Job-Seeking App for the Coding Bootcamp Graduate</p>
+        <p className="text-center margin gray">The Ultimate Job Hunting Tool for the Coding Bootcamp Graduate</p>
       </div>
     );
   }
