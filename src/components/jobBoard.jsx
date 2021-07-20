@@ -8,6 +8,7 @@ class JobBoard extends Component {
     this.state = {
       currentJob: {},
       showModal: false,
+      date: "2021-07-12 14:46:50.67408",
     };
   }
 
@@ -41,7 +42,7 @@ class JobBoard extends Component {
                 this.setCurrentJob(job);
               }}
             >
-              {job.company_name} - {job.position}
+              {job.created_at >=  this.state.date && ( {job.company_name} - {job.position} )}
             </Button>
             {this.state.showModal ? (
               <JobShow
