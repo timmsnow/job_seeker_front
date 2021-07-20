@@ -35,6 +35,7 @@ class JobBoard extends Component {
       <div>
         {this.props.jobData.map((job, index) => (
           <div key={index} className="center margin">
+            {job.created_at >=  this.state.date && 
             <Button
               variant="light"
               onClick={() => {
@@ -42,8 +43,8 @@ class JobBoard extends Component {
                 this.setCurrentJob(job);
               }}
             >
-              {job.created_at >=  this.state.date && <div> {job.company_name} - {job.position} </div> }
-            </Button>
+               <div> {job.company_name} - {job.position} </div> 
+            </Button> }
             {this.state.showModal ? (
               <JobShow
                 job={this.state.currentJob}
