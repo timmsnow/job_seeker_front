@@ -42,7 +42,7 @@ class JobBoard extends Component {
                 this.setCurrentJob(job);
               }}
             >
-              {job.created_at >=  this.state.date && ( {job.company_name} - {job.position} )}
+              {job.created_at >=  this.state.date && <div> {job.company_name} - {job.position} </div> }
             </Button>
             {this.state.showModal ? (
               <JobShow
