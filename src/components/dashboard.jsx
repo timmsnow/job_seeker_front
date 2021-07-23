@@ -48,8 +48,7 @@ class Dashboard extends Component {
       showPortfolioCounter: true,
       showWhiteBoardingCounter: true,
       showBreakCounter: true,
-      recentJobs: [],
-      toggle: true,
+
       // currentJob: {},
     };
   }
@@ -84,21 +83,18 @@ class Dashboard extends Component {
   }
 
   getUserJobsAndGoals = () => {
-    let day = new Date();
-    let oneDayAgo = day.setDate(day.getDate() - 1);
-    axios.get("http://localhost:3000/api/users/" + localStorage.getItem("user_id")).then((response) => {
+    axios.get("https://job-seeker-2.herokuapp.com/api/users/" + localStorage.getItem("user_id")).then((response) => {
       this.setState({ jobs: response.data.jobs });
       this.setState({ userGoals: response.data.user_goals });
       this.getUserMetrics();
       let appliedJobs = this.state.jobs.filter(job => job.status === ("Applied"))
-      let recentJobs = this.state.jobs.filter(job => Date.parse(job.created_at) > (oneDayAgo))
+      console.log(appliedJobs);
       // response.data.jobs.forEach(function(job){
       //   if (job.status === "Applied") {
       //     appliedJobs.push(job.id)
       //   }
       // });
       this.setState({ appliedJobs: appliedJobs});
-      this.setState({ recentJobs: recentJobs});
       console.log(this.state.appliedJobs);
 
       // console.log(this.state.appliedJobs)
@@ -108,7 +104,7 @@ class Dashboard extends Component {
   };
 
   getUserMetrics = () => {
-    axios.get("http://localhost:3000/api/metric_tables/day/" + localStorage.getItem("user_id")).then((response) => {
+    axios.get("https://job-seeker-2.herokuapp.com/api/metric_tables/day/" + localStorage.getItem("user_id")).then((response) => {
       if (response.data.length === 0) {
       } else {
         var oldId = response.data[0].id;
@@ -160,7 +156,7 @@ class Dashboard extends Component {
         });
         if (response.data.length === 2) {
           axios
-            .delete("http://localhost:3000/api/metric_tables/" + oldId)
+            .delete("https://job-seeker-2.herokuapp.com/api/metric_tables/" + oldId)
             .then(console.log("deleted old metric and set state of new metric successfully"));
         }
       }
@@ -203,7 +199,7 @@ class Dashboard extends Component {
 
   handleDestroyJob = (response) => {
     // var job_id = this.props.job.id
-    axios.delete("http://localhost:3000/api/jobs/" + response).then((res) => {
+    axios.delete("https://job-seeker-2.herokuapp.com/api/jobs/" + response).then((res) => {
       console.log(res.data);
       this.state.jobs.splice(this.state.jobs.indexOf(response), 1);
       // this.closeModal();
@@ -222,12 +218,11 @@ class Dashboard extends Component {
   }
   jobDataFilter = (status) => {
     // console.log(Object.values(status)[0])
-    return this.state.recentJobs.filter((job) => job.status === Object.values(status)[0]);
-    // return this.state.jobs.filter((job) => job.status === Object.values(status)[0]);
+    return this.state.jobs.filter((job) => job.status === Object.values(status)[0]);
   };
 
   updateUserGoals = () => {
-    axios.get("http://localhost:3000/api/users/" + localStorage.getItem("user_id")).then((res) => {
+    axios.get("https://job-seeker-2.herokuapp.com/api/users/" + localStorage.getItem("user_id")).then((res) => {
       this.setState({ userGoals: res.data.user_goals });
     });
   };
@@ -309,7 +304,7 @@ class Dashboard extends Component {
       breaks: this.state.metrics.breaks,
     };
     axios
-      .patch("http://localhost:3000/api/metric_tables/" + localStorage.getItem("metric_row_id"), params)
+      .patch("https://job-seeker-2.herokuapp.com/api/metric_tables/" + localStorage.getItem("metric_row_id"), params)
       .then((response) => {
         console.log(response);
       });
@@ -337,20 +332,6 @@ class Dashboard extends Component {
       showWhiteBoardingCounter: true,
       showBreakCounter: true
     });
-  }
-
-  showFullJobIndex = () => {
-    let jobs = this.state.jobs;
-    let recentJobs = this.state.recentJobs;
-    this.setState({recentJobs: jobs,
-    jobs: recentJobs, toggle: false});
-  }
-
-  showRecentJobsIndex = () => {
-    let jobs = this.state.recentJobs;
-    let recentJobs = this.state.jobs;
-    this.setState({recentJobs: recentJobs,
-    jobs: jobs, toggle: true});
   }
 
 
@@ -415,8 +396,6 @@ class Dashboard extends Component {
               <Button className="shadow" size="sm" variant="warning" onClick={this.showGoalsModal}>
                 Edit Goals
               </Button>
-          {this.state.toggle && (<Button className="shadow" variant="dark" onClick={this.showFullJobIndex}>See Total Job History</Button> )}
-          {!this.state.toggle && (<Button className="shadow" variant="light" onClick={this.showRecentJobsIndex}>Show Todays Jobs</Button> )}
           {this.state.showModal ? (
             <JobCreate today={this.state.today} handleAddJob={this.handleAddJob} closeModal={this.closeModal} />
             ) : null}
