@@ -318,7 +318,7 @@ class JobShow extends Component {
                   onClick={() => {
                     if (window.confirm("Are you sure you want to delete this job?"))
                       this.props.deleteJob(this.state.id);
-                    // this.props.closeModal();
+                    this.props.closeModal();
                   }}
                 >
                   Delete Job
