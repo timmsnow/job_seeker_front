@@ -48,6 +48,8 @@ class Dashboard extends Component {
       showPortfolioCounter: true,
       showWhiteBoardingCounter: true,
       showBreakCounter: true,
+      recentJobs: [],
+      toggle: true,
 
       // currentJob: {},
     };
@@ -83,19 +85,25 @@ class Dashboard extends Component {
   }
 
   getUserJobsAndGoals = () => {
+    let day = new Date();
+    let oneDayAgo = day.setDate(day.getDate() - 1);
     axios.get("https://job-seeker-2.herokuapp.com/api/users/" + localStorage.getItem("user_id")).then((response) => {
       this.setState({ jobs: response.data.jobs });
       this.setState({ userGoals: response.data.user_goals });
       this.getUserMetrics();
       let appliedJobs = this.state.jobs.filter(job => job.status === ("Applied"))
-      console.log(appliedJobs);
+      let recentJobs = this.state.jobs.filter(job => Date.parse(job.created_at) > (oneDayAgo))
+
       // response.data.jobs.forEach(function(job){
       //   if (job.status === "Applied") {
       //     appliedJobs.push(job.id)
       //   }
       // });
       this.setState({ appliedJobs: appliedJobs});
+      this.setState({ recentJobs: recentJobs});
+
       console.log(this.state.appliedJobs);
+      console.log(this.state.recentJobs);
 
       // console.log(this.state.appliedJobs)
       // console.log(response.data.user_goals);
@@ -334,6 +342,19 @@ class Dashboard extends Component {
     });
   }
 
+  showFullJobIndex = () => {
+    let jobs = this.state.jobs;
+    let recentJobs = this.state.recentJobs;
+    this.setState({recentJobs: jobs,
+    jobs: recentJobs, toggle: false});
+  }
+
+  showRecentJobsIndex = () => {
+    let jobs = this.state.recentJobs;
+    let recentJobs = this.state.jobs;
+    this.setState({recentJobs: recentJobs,
+    jobs: jobs, toggle: true});
+  }
 
   render() {
     return (
@@ -396,6 +417,8 @@ class Dashboard extends Component {
               <Button className="shadow" size="sm" variant="warning" onClick={this.showGoalsModal}>
                 Edit Goals
               </Button>
+              {this.state.toggle && (<Button className="shadow" variant="dark" onClick={this.showFullJobIndex}>See Total Job History</Button> )}
+          {!this.state.toggle && (<Button className="shadow" variant="light" onClick={this.showRecentJobsIndex}>Show Todays Jobs</Button> )}
           {this.state.showModal ? (
             <JobCreate today={this.state.today} handleAddJob={this.handleAddJob} closeModal={this.closeModal} />
             ) : null}
